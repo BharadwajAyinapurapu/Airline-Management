@@ -67,6 +67,12 @@ public class User extends HttpServlet {
         {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/airline","root","");
+            PreparedStatement ps0=con.prepareStatement("Select * from user where username=?");
+            ps0.setString(1,uname);
+            ResultSet rs0=ps0.executeQuery();
+            if(rs0.next()){
+                return false;
+            }
             PreparedStatement ps=con.prepareStatement("insert into user(name,phonenum,email,username,password) values(?,?,?,?,?)");
             ps.setString(1,name);
             ps.setString(2,phno);
